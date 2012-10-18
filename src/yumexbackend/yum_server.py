@@ -21,16 +21,15 @@
 import os
 import os.path
 import sys
-sys.path.insert(0, '/usr/share/yum-cli')
 
-import yum
+
+import dnf.yum as yum
 import traceback
 from optparse import OptionParser
 import types
 import time
 
-from yum.packageSack import packagesNewestByNameArch
-from yum.update_md import UpdateMetadata
+from dnf.yum.update_md import UpdateMetadata
 
 from yumexbase.constants import *
 from yumexbackend import YumHistoryTransaction, YumHistoryPackage, pack, unpack
@@ -38,23 +37,23 @@ from yumexbase import YumexBackendFatalError
 
 
 from urlgrabber.progress import format_number
-import yum.logginglevels as logginglevels
-import yum.Errors as Errors
-from yum.rpmtrans import RPMBaseCallback
-from yum.packages import YumLocalPackage
-from yum.packageSack import packagesNewestByName
+import dnf.yum.logginglevels as logginglevels
+import dnf.yum.Errors as Errors
+from dnf.yum.rpmtrans import RPMBaseCallback
+from dnf.yum.packages import YumLocalPackage
+from yumexbackend.yum_compability import packagesNewestByName, packagesNewestByNameArch
 # Pylint in F10 cant handle the init_hook, so disable the cant find output error
 # pylint: disable-msg=F0401
-from output import DepSolveProgressCallBack # yum cli output.py
+from dnf.cli.output import DepSolveProgressCallBack # yum cli output.py
 # pylint: enable-msg=F0401
-from yum.constants import *
-from yum.callbacks import *
+from dnf.yum.constants import *
+from dnf.yum.callbacks import *
 import yumexbase.constants as const
-import yum.plugins
+import dnf.yum.plugins
 from urlgrabber.grabber import URLGrabber, URLGrabError
 from rpmUtils.arch import canCoinstall
 
-from yum.i18n import _ as yum_translated
+from dnf.yum.i18n import _ as yum_translated
 
 
 # We want these lines, but don't want pylint to whine about the imports not being used
